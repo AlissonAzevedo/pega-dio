@@ -9,10 +9,11 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  useToast,
+  Heading,
 } from "@chakra-ui/react";
 import ListReservation from "../components/ListReservation";
 import { HiOutlineKey } from "react-icons/hi";
-import { AiOutlineReload } from "react-icons/ai";
 import MultiSelect from "../components/MultiSelect";
 import Select from "../components/Select";
 
@@ -30,6 +31,8 @@ export default function Home() {
     pessoas: '',
     chaves: [],
   })
+
+  const toast = useToast();
 
   useEffect(() => {
     const loadAllPeoples = async () => {
@@ -51,10 +54,50 @@ export default function Home() {
     e.preventDefault();
     reservations.chaves = keys.map((option) => (option.value))
     reservations.pessoas = user.value
-    console.log(reservations)
-    // const response = await createReservation(reservations); DESCOMENTAR DPS DAS ALTERAÇÃOES NA API
+    reservations.pessoas === undefined || '' ? (
+      toast({
+        title: "Erro",
+        description: "Campo pessoa é obrigatório",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      })
+    ): (
+      // console.log(reservations)
+      reservations.chaves.length === 0 ? (
+        toast({
+          title: "Erro",
+          description: "Campo chaves é obrigatório",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        })
+      ): (
+        null
+      )
+    )
+    
+    const response = await createReservation(reservations); //DESCOMENTAR DPS DAS ALTERAÇÃOES NA API
+    onClose()
+    const statusCode = response.status;
+    // console.log(response)
+    if (statusCode == 201) {
+      toast({
+        title: "Sucesso",
+        description: "Reserva feita com sucesso",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Entre em contato com suporte",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
   }
-
 
   return (
     <>
@@ -66,33 +109,22 @@ export default function Home() {
             backgroundColor='#fff' 
             color='#794150' 
             variant='solid'
-            _hover={{ borderColor: '#000000b3' }}
           >
             Pegar Chave
-          </Button>
-
-          <Button 
-            leftIcon={<AiOutlineReload />} 
-            onClick={onOpen}           
-            backgroundColor='#fff' 
-            color='#794150' 
-            variant='solid'
-            _hover={{ borderColor: '#000000b3' }}
-            mx="2"
-          >
-            Atualizar
           </Button>
         </div>
 
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
+            <ModalHeader>Criar reserva</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <form>
-                <div className="w-full flex flex-col items-center justify-center">
+                <div className="w-full flex flex-col items-start justify-center">
+                  <Heading size='sm'>Colaborador(a):</Heading>
                   <Select Options={people} isOptionSelected={(option) => setUser(option)}/>
+                  <Heading size='sm'>Chave(s):</Heading>
                   <MultiSelect Options={key} isOptionSelected={(options) => setKeys(options)}/>
                 </div>
               </form>
@@ -101,7 +133,7 @@ export default function Home() {
               <Button colorScheme="red" mr={3} onClick={onClose}>
                 Cancelar
               </Button>
-              <Button variant="ghost" onClick={AddReservation}>Pegar</Button>
+              <Button colorScheme="blue" onClick={AddReservation}>Pegar</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
