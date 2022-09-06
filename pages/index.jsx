@@ -120,14 +120,12 @@ export default function Home() {
             <ModalHeader>Criar reserva</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <form>
-                <div className="w-full flex flex-col items-start justify-center">
-                  <Heading size='sm'>Colaborador(a):</Heading>
-                  <Select Options={people} isOptionSelected={(option) => setUser(option)}/>
-                  <Heading size='sm'>Chave(s):</Heading>
-                  <MultiSelect Options={key} isOptionSelected={(options) => setKeys(options)}/>
-                </div>
-              </form>
+              <div className="w-full flex flex-col items-start justify-center">
+                <Heading size='sm'>Colaborador(a):</Heading>
+                <Select Options={people} isOptionSelected={(option) => setUser(option)}/>
+                <Heading size='sm'>Chave(s):</Heading>
+                <MultiSelect Options={key} isOptionSelected={(options) => setKeys(options)}/>
+              </div>
             </ModalBody>
             <ModalFooter>
               <Button colorScheme="red" mr={3} onClick={onClose}>

@@ -19,3 +19,8 @@ export async function getAllPeoples(){
   const response = await api.get('/pessoas');
   return response.data
 }
+
+export async function updateReservation(id, data) {
+  const response = await api.patch(`/reservas/${id}/`, data);
+  return response;
+}
