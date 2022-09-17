@@ -19,7 +19,7 @@ const MultiSelect = ({ Options, isOptionSelected }) => {
           isClearable
           placeholder="Digite ou selecione a chave"
           noOptionsMessage={() => "Nenhuma chave encontrada"}
-          options={Options.map((option) => ({ label: option.numero + ' - ' + option.nome, value: option.id, reservation: option.reservada}))}
+          options={Options.map((option) => ({ label: option.numero + ' - ' + option.nome, value: option.id, reservation: option.reservada }))}
           onChange={handleChange}
           loadingMessage={() => "Carregando..."}
           theme={(theme) => ({
@@ -30,7 +30,7 @@ const MultiSelect = ({ Options, isOptionSelected }) => {
               primary25: '#e5e5e5',
             },
           })}
-          isOptionDisabled={(option)=> option.reservation == true}
+          isOptionDisabled={(option) => option.reservation == true}
         />
       </div>
     </>
