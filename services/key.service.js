@@ -24,3 +24,7 @@ export async function updateReservation(id, data) {
   const response = await api.patch(`/reservas/${id}/`, data);
   return response;
 }
+
+export async function updateKey(id, data){
+  const response = await api.patch(`/chaves/${id}/`, data);
+}
