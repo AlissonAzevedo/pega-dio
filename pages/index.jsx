@@ -17,9 +17,8 @@ import { HiOutlineKey } from "react-icons/hi";
 import MultiSelect from "../components/MultiSelect";
 import Select from "../components/Select";
 
-import {getAllKeys, getAllPeoples, createReservation} from "../services/key.service";
-
-
+import {getAllKeys, getAllPeoples, createReservation, updateKey} from "../services/key.service";
+import { useRouter } from 'next/router'
 
 export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,12 +26,13 @@ export default function Home() {
   const [key, setKey] = useState("");
   const [keys, setKeys] = useState([])
   const [people, setPeoples] = useState([])
-  const [reservations, setReservations] = useState({
+  const [newReservations, setReservations] = useState({
     pessoas: '',
     chaves: [],
   })
 
   const toast = useToast();
+  const router = useRouter()
 
   useEffect(() => {
     const loadAllPeoples = async () => {
@@ -52,9 +52,9 @@ export default function Home() {
 
   const AddReservation = async (e) => {
     e.preventDefault();
-    reservations.chaves = keys.map((option) => (option.value))
-    reservations.pessoas = user.value
-    reservations.pessoas === undefined || '' ? (
+    newReservations.chaves = keys.map((option) => (option.value))
+    newReservations.pessoas = user.value
+    newReservations.pessoas === undefined || '' ? (
       toast({
         title: "Erro",
         description: "Campo pessoa é obrigatório",
@@ -63,8 +63,8 @@ export default function Home() {
         isClosable: true,
       })
     ): (
-      // console.log(reservations)
-      reservations.chaves.length === 0 ? (
+      // console.log(newReservations)
+      newReservations.chaves.length === 0 ? (
         toast({
           title: "Erro",
           description: "Campo chaves é obrigatório",
@@ -77,10 +77,19 @@ export default function Home() {
       )
     )
     
-    const response = await createReservation(reservations); //DESCOMENTAR DPS DAS ALTERAÇÃOES NA API
+    for (let i = 0; i < newReservations.chaves.length; i++) {
+      let id = newReservations.chaves[i]
+      const updateKeyById = async (id) =>{
+        const data = {"reservada": true}
+        const response = await updateKey(id, data);
+      }
+      updateKeyById(id)
+    }
+
+    const response = await createReservation(newReservations); //DESCOMENTAR DPS DAS ALTERAÇÃOES NA API
     onClose()
     const statusCode = response.status;
-    // console.log(response)
+
     if (statusCode == 201) {
       toast({
         title: "Sucesso",
@@ -98,14 +107,21 @@ export default function Home() {
       });
     }
   }
-
+  const openModal = () => {
+    onOpen()
+    const loadAllKeys = async () => {
+      const response = await getAllKeys();
+      setKey(response);
+    };
+    loadAllKeys();
+  }
   return (
     <>
       <div className="w-full flex flex-col justify-start items-start px-4 h-screen bg-[#e5e5e5]">
         <div className="w-full flex items-center justify-start my-4">
           <Button 
             leftIcon={<HiOutlineKey />} 
-            onClick={onOpen}           
+            onClick={openModal}           
             backgroundColor='#fff' 
             color='#794150' 
             variant='solid'
