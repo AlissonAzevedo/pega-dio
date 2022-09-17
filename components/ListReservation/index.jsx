@@ -17,7 +17,7 @@ import ReservationItem from '../ReservationItem';
 import { getAllReservation } from "../../services/key.service";
 
 
-const ListReservation = () => {
+const ListReservation = ({filteredResults, reservations}) => {
 
   const [reservations, setReservations] = useState([]);
   const [showLoading, setShowLoading] = useState(true)
@@ -36,7 +36,7 @@ const ListReservation = () => {
     if (reservations) {
       const loadingDisabler = setTimeout(() => {
         setShowLoading(false)
-      }, 600)
+      }, 800)
 
       return () => clearInterval(loadingDisabler)
     }
@@ -46,7 +46,9 @@ const ListReservation = () => {
     const response = await getAllReservation();
     setReservations(response);
   };
-
+  setTimeout(() => {
+    updateListReservation()
+  }, 120000)
   const searchItems = (searchValue) => {
     setSearched(searchValue);
     if (searched !== "") {
@@ -84,14 +86,14 @@ const ListReservation = () => {
               <Input
                 type="text"
                 focusBorderColor="#794150"
-                placeholder="Digite um nome ou numero da chave"
+                placeholder="Digite um nome"
                 onChange={(e) => searchItems(e.target.value)}
               />
             </InputGroup>
           </div>
         </div>
         <div className="w-full p-2 flex items-center justify-around font-bold">
-          <div>Nome</div>
+          <div>Colaborador</div>
           <div>Chaves</div>
           <div>Entrega</div>
           <div>Devolução</div>
@@ -104,11 +106,10 @@ const ListReservation = () => {
                 id={reservation.id}
                 colaborador={reservation.nome_pessoa}
                 chave={reservation.chave}
-                data_reserva={reservation.data_reserva_formatada}
-                data_devolucao={reservation.data_devolucao_formatada}
+                data_reserva={reservation.data_reserva}
+                data_devolucao={reservation.data_devolucao}
                 devolvido={reservation.devolvido}
               />
-
             )
             )
             :
@@ -119,8 +120,8 @@ const ListReservation = () => {
                   id={reservation.id}
                   colaborador={reservation.nome_pessoa}
                   chave={reservation.chave}
-                  data_reserva={reservation.data_reserva_formatada}
-                  data_devolucao={reservation.data_devolucao_formatada}
+                  data_reserva={reservation.data_reserva}
+                  data_devolucao={reservation.data_devolucao}
                   devolvido={reservation.devolvido}
                 />
               ))
