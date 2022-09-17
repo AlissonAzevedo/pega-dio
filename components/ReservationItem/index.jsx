@@ -9,7 +9,6 @@ import {
     ModalCloseButton,
     useDisclosure,
     useToast,
-    Heading,
     Text,
     Badge,
 } from "@chakra-ui/react";
@@ -22,6 +21,7 @@ import { GiHouseKeys } from "react-icons/gi"
 
 import { updateReservation, updateKey } from "../../services/key.service";
 import formatDate from '../../utils/formatDate';
+
 
 const ReservationItem = ({ id, colaborador, chave, data_reserva, data_devolucao, devolvido }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -79,7 +79,6 @@ const ReservationItem = ({ id, colaborador, chave, data_reserva, data_devolucao,
                         <p className="w-[190px]">
                             {data_devolucao === data_reserva ?
                                 ""
-                                // "--------------------""
                                 :
                                 formatDate(data_devolucao)}
                         </p>
@@ -93,13 +92,13 @@ const ReservationItem = ({ id, colaborador, chave, data_reserva, data_devolucao,
                     <ModalCloseButton />
                     <ModalBody>
                         <div className="w-full flex items-center my-4">
-                            <Badge colorScheme='purple' p='2'> 
+                            <Badge colorScheme='purple' p='2'>
                                 <AiOutlineUser />
                             </Badge>
                             <Text ml='2'>{colaborador}</Text>
                         </div>
                         <div className="w-full flex items-center my-4">
-                            <Badge colorScheme='purple' p='2'> 
+                            <Badge colorScheme='purple' p='2'>
                                 <GiHouseKeys />
                             </Badge>
                             <Text ml='2'>
@@ -117,13 +116,13 @@ const ReservationItem = ({ id, colaborador, chave, data_reserva, data_devolucao,
                             </Text>
                         </div>
                         <div className="w-full flex items-center my-4">
-                            <Badge colorScheme='purple' p='2'>        
+                            <Badge colorScheme='purple' p='2'>
                                 <TbCalendar />
                             </Badge>
                             <Text ml='2'>{formatDate(data_reserva)}</Text>
                         </div>
                         <div className="w-full flex items-center my-4">
-                            <Badge colorScheme='purple' p='2'> 
+                            <Badge colorScheme='purple' p='2'>
                                 <TbCalendarTime />
                             </Badge>
                             <Text ml='2'>
