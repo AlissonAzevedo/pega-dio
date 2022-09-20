@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-children-prop */
 import { useState, useEffect } from 'react';
 import {
@@ -172,8 +173,7 @@ export default function Home() {
     <>
       <div className="w-full flex flex-col justify-start items-start px-4 h-screen bg-[#e5e5e5]">
         <div className="w-full flex items-center justify-start my-4">
-          <div className="flex items-center w-full sm:mx-4">
-            <div className="w-full flex items-center justify-start">
+          <div className="flex items-center w-full">
                 <Button
                 leftIcon={<HiOutlineKey />}
                 onClick={openModal}
@@ -199,6 +199,7 @@ export default function Home() {
               >
                 Atualizar
               </Button>
+            <div className="w-full flex items-center justify-between">
               <InputGroup mx='2' w='400px'>
                 <InputLeftElement pointerEvents="none" children={<BiSearch />} />
                 <Input
@@ -211,6 +212,7 @@ export default function Home() {
                   onChange={(e) => searchItems(e.target.value)}
                 />
               </InputGroup>
+              <img src="assets/brand-diocesano.png" alt="logo diocesano" width="300px" />
             </div>
           </div>
         </div>
