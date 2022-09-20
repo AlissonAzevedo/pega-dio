@@ -172,33 +172,33 @@ export default function Home() {
     <>
       <div className="w-full flex flex-col justify-start items-start px-4 h-screen bg-[#e5e5e5]">
         <div className="w-full flex items-center justify-start my-4">
-          <Button
-            leftIcon={<HiOutlineKey />}
-            onClick={openModal}
-            backgroundColor='#fff'
-            color='#794150'
-            variant='solid'
-            size='md'
-            _hover={{ backgroundColor: '#00000033' }}
-            mr='2'
-          >
-            Pegar Chave
-          </Button>
-
-          <Button
-            leftIcon={<AiOutlineReload />}
-            onClick={() => updateListReservation()}
-            backgroundColor='#fff'
-            color='#794150'
-            variant='solid'
-            _hover={{ backgroundColor: '#00000033' }}
-            size='md'
-            mx='2'
-          >
-            Atualizar
-          </Button>
           <div className="flex items-center w-full sm:mx-4">
             <div className="w-full flex items-center justify-start">
+                <Button
+                leftIcon={<HiOutlineKey />}
+                onClick={openModal}
+                backgroundColor='#fff'
+                color='#794150'
+                variant='solid'
+                size='md'
+                _hover={{ backgroundColor: '#00000033' }}
+                mr='2'
+              >
+                Pegar Chave
+              </Button>
+
+              <Button
+                leftIcon={<AiOutlineReload />}
+                onClick={() => updateListReservation()}
+                backgroundColor='#fff'
+                color='#794150'
+                variant='solid'
+                _hover={{ backgroundColor: '#00000033' }}
+                size='md'
+                mr='2'
+              >
+                Atualizar
+              </Button>
               <InputGroup mx='2' w='400px'>
                 <InputLeftElement pointerEvents="none" children={<BiSearch />} />
                 <Input
